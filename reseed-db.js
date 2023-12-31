@@ -19,9 +19,9 @@ const images = [
 
 const db = {
   dogs: range(dogAmount).map((_, id) => ({
-    name: `${capitalize(faker.name.firstName())}`,
+    name: `${capitalize(faker.person.firstName())}`,
     image: sample(images),
-    description: faker.random.words(sample([8, 5, 7])),
+    description: faker.word.words(sample([8, 5, 7])),
     isFavorite: sample([true, false]),
     id,
   })),
