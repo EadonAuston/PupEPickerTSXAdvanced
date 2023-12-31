@@ -1,41 +1,6 @@
 {
   "dogs": [
     {
-      "name": "Wilber",
-      "image": "/assets/chihuahua.avif",
-      "description": "magenta boo colossal unpleasant seize Tactics Florida",
-      "isFavorite": true,
-      "id": 0
-    },
-    {
-      "name": "Roselyn",
-      "image": "/assets/chihuahua.avif",
-      "description": "Coupe South withdrawal Soft Latin lime Reggae chapter",
-      "isFavorite": true,
-      "id": 1
-    },
-    {
-      "name": "Antonia",
-      "image": "/assets/chihuahua.avif",
-      "description": "ampere Metal lavender Funk Fundamental payment wireless",
-      "isFavorite": true,
-      "id": 2
-    },
-    {
-      "name": "Shaina",
-      "image": "/assets/corgi.png",
-      "description": "Cotton male Refined Convertible auxiliary",
-      "isFavorite": true,
-      "id": 3
-    },
-    {
-      "name": "Dallin",
-      "image": "/assets/chihuahua.avif",
-      "description": "Directives Delaware why Response Diesel Kentucky blue cyan",
-      "isFavorite": true,
-      "id": 4
-    },
-    {
       "name": "Efrain",
       "image": "/assets/chihuahua.avif",
       "description": "Electric Analyst Usability Mountain East Table female Lead",
@@ -53,14 +18,14 @@
       "name": "Ellis",
       "image": "/assets/cowardly.png",
       "description": "Folk interface engage Classical Specialist Bicycle gold",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 7
     },
     {
       "name": "Velma",
       "image": "/assets/boxer.png",
       "description": "Diesel whether synthesize South Investment Zirconium farad",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 8
     },
     {
@@ -74,21 +39,21 @@
       "name": "Geovanny",
       "image": "/assets/cowardly.png",
       "description": "South North male Sports Gasoline",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 10
     },
     {
       "name": "Estevan",
       "image": "/assets/dalmation.png",
       "description": "Automotive Monitored circa violet Georgia",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 11
     },
     {
       "name": "Estefania",
       "image": "/assets/dalmation.png",
       "description": "reboot facilis input management that overriding SMTP",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 12
     },
     {
@@ -106,17 +71,10 @@
       "id": 14
     },
     {
-      "name": "Oral",
-      "image": "/assets/chihuahua.avif",
-      "description": "City Optimized Corporate Clothing Implemented Metal navigating Chair",
-      "isFavorite": false,
-      "id": 15
-    },
-    {
       "name": "Anjali",
       "image": "/assets/chihuahua.avif",
       "description": "Bicycle canst nor henry RAM",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 16
     },
     {
@@ -137,15 +95,22 @@
       "name": "Yvette",
       "image": "/assets/boxer.png",
       "description": "distributed Sleek nest exploit Surinam compressing straight",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 19
     },
     {
-      "name": "asdfasdf",
-      "description": "asdfasdf",
-      "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
+      "name": "Eadon",
+      "description": "He is coding in TypeScript + React and is learning a lot about API Requests",
+      "image": "/assets/corgi.png",
+      "isFavorite": true,
       "id": 20
+    },
+    {
+      "name": "Test For Class Component",
+      "description": "Testing class component, ",
+      "image": "/assets/corgi.png",
+      "isFavorite": false,
+      "id": 21
     }
   ]
 }

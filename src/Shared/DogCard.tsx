@@ -1,4 +1,4 @@
-import { Dog } from "../types";
+import { DogData } from "../types";
 import { FavoriteButton } from "./FavoriteButton";
 import { TrashButton } from "./TrashButton";
 import { UnfavoriteButton } from "./UnfavoriteButton";
@@ -11,7 +11,7 @@ export const DogCard = ({
   onHeartClick,
   isLoading,
 }: {
-  dog: Dog;
+  dog: DogData;
   onTrashIconClick: () => void;
   onEmptyHeartClick: () => void;
   onHeartClick: () => void;
