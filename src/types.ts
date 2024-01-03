@@ -6,3 +6,9 @@ export type DogData = {
   isFavorite: boolean;
   name: string;
 };
+
+export type WhatToFilter =
+  | "favorite"
+  | "unfavorite"
+  | "create-dog"
+  | "non-selected";

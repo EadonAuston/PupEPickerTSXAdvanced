@@ -1,18 +1,19 @@
 import { dogPictures } from "../dog-pictures";
 import { Requests } from "../api";
 import { useState } from "react";
-// use this as your default selected image
+import { toast } from "react-hot-toast";
+
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 export const FunctionalCreateDogForm = ({
-  updatePage,
+  fetchData,
 }: {
-  updatePage: () => Promise<void>;
+  fetchData: () => Promise<void>;
 }) => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const isFavorite = false;
 
   return (
     <form
@@ -20,6 +21,7 @@ export const FunctionalCreateDogForm = ({
       id="create-dog-form"
       onSubmit={async (e) => {
         e.preventDefault();
+        toast("✅ Dog Successfully Created!");
         if (!image) {
           setImage(defaultSelectedImage);
         }
@@ -29,7 +31,9 @@ export const FunctionalCreateDogForm = ({
           image,
           isFavorite,
         });
-        updatePage();
+        fetchData();
+        setName("");
+        setDescription("");
       }}>
       <h4>Create a New Dog</h4>
       <label htmlFor="name">Dog Name</label>
@@ -59,9 +63,6 @@ export const FunctionalCreateDogForm = ({
           setImage(e.target.value);
         }}
         value={image}>
-        <option value="" selected disabled hidden>
-          Choose photo here
-        </option>
         {Object.entries(dogPictures).map(([label, pictureValue]) => {
           return (
             <option value={pictureValue} key={pictureValue}>

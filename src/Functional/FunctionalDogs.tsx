@@ -1,29 +1,28 @@
 import { DogCard } from "../Shared/DogCard";
-import { dogPictures } from "../dog-pictures";
 import { Requests } from "../api";
 import { DogData } from "../types";
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
 export const FunctionalDogs = ({
   dogData,
-  updatePage,
+  fetchData,
 }: {
   dogData: DogData[];
-  updatePage: () => Promise<void>;
+  fetchData: () => Promise<void>;
 }) => {
   const handleTrashIconClick = async (dogId: number) => {
     await Requests.deleteDog(dogId);
-    await updatePage();
+    await fetchData();
   };
 
   const handleHeartClick = async (dogId: number) => {
     await Requests.updateDog(dogId, { isFavorite: false });
-    await updatePage();
+    await fetchData();
   };
 
   const handleEmptyHeartClick = async (dogId: number) => {
     await Requests.updateDog(dogId, { isFavorite: true });
-    await updatePage();
+    await fetchData();
   };
 
   return (

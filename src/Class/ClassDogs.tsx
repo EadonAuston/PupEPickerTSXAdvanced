@@ -5,26 +5,27 @@ import { DogData } from "../types";
 
 type ClassDogsProps = {
   dogData: DogData[];
-  updatePage: () => Promise<void>;
+  fetchData: () => Promise<void>;
 };
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
 export class ClassDogs extends Component<ClassDogsProps> {
   render() {
-    const { dogData, updatePage } = this.props;
+    const { dogData, fetchData } = this.props;
+
     const handleTrashIconClick = async (dogId: number) => {
       await Requests.deleteDog(dogId);
-      await updatePage();
+      await fetchData();
     };
 
     const handleHeartClick = async (dogId: number) => {
       await Requests.updateDog(dogId, { isFavorite: false });
-      await updatePage();
+      await fetchData();
     };
 
     const handleEmptyHeartClick = async (dogId: number) => {
       await Requests.updateDog(dogId, { isFavorite: true });
-      await updatePage();
+      await fetchData();
     };
 
     return (

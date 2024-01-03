@@ -1,35 +1,34 @@
-// you can use `ReactNode` to add a type to the children prop
-import { Component, ReactNode } from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
-import { DogData } from "../types";
+import { DogData, WhatToFilter } from "../types";
 import { ClassDogs } from "./ClassDogs";
 import { ClassCreateDogForm } from "./ClassCreateDogForm";
 
 type ClassSectionProps = {
-  filterDogData: (cb: (item: DogData) => {}) => Promise<void>;
-  creatingADog: boolean;
-  setCreatingADog: (inputValue: boolean) => void;
-  setWhatToFilter: (inputValue: string) => void;
-  dogData: DogData[];
-  updatePage: () => Promise<void>;
-  favoritedAmt: number;
-  unfavoritedAmt: number;
-  whatToFilter: string;
+  allDogs: DogData[];
+  fetchData: () => Promise<void>;
+  whatToFilter: WhatToFilter;
+  setWhatToFilter: (inputValue: WhatToFilter) => void;
 };
 
 export class ClassSection extends Component<ClassSectionProps> {
   render() {
-    const {
-      filterDogData,
-      creatingADog,
-      setCreatingADog,
-      setWhatToFilter,
-      dogData,
-      updatePage,
-      favoritedAmt,
-      unfavoritedAmt,
-      whatToFilter,
-    } = this.props;
+    const { allDogs, fetchData, whatToFilter, setWhatToFilter } = this.props;
+    const favoritedAmt = [...allDogs].filter((dog) => dog.isFavorite).length;
+    const unfavoritedAmt = [...allDogs].filter((dog) => !dog.isFavorite).length;
+
+    function dogDataToShow() {
+      switch (whatToFilter) {
+        case "favorite":
+          return [...allDogs].filter((dog) => dog.isFavorite);
+        case "unfavorite":
+          return [...allDogs].filter((dog) => !dog.isFavorite);
+        case "non-selected":
+          return [...allDogs].filter((dog) => dog);
+        default:
+          return [];
+      }
+    }
 
     return (
       <section id="main-section">
@@ -45,15 +44,9 @@ export class ClassSection extends Component<ClassSectionProps> {
                 whatToFilter === "favorite" ? "active" : ""
               }`}
               onClick={() => {
-                setCreatingADog(false);
-                if (whatToFilter === "favorite") {
-                  filterDogData((dog) => dog);
-                  setWhatToFilter("");
-                } else {
-                  filterDogData((dog) => dog.isFavorite === true);
-
-                  setWhatToFilter("favorite");
-                }
+                whatToFilter === "favorite"
+                  ? setWhatToFilter("non-selected")
+                  : setWhatToFilter("favorite");
               }}>
               favorited ( {favoritedAmt} )
             </div>
@@ -64,40 +57,30 @@ export class ClassSection extends Component<ClassSectionProps> {
                 whatToFilter === "unfavorite" ? "active" : ""
               }`}
               onClick={() => {
-                setCreatingADog(false);
-                if (whatToFilter === "unfavorite") {
-                  filterDogData((dog) => dog);
-                  setWhatToFilter("");
-                } else {
-                  filterDogData((dog) => dog.isFavorite === false);
-                  setWhatToFilter("unfavorite");
-                }
+                whatToFilter === "unfavorite"
+                  ? setWhatToFilter("non-selected")
+                  : setWhatToFilter("unfavorite");
               }}>
               unfavorited ( {unfavoritedAmt} )
             </div>
             <div
               className={`selector ${
-                whatToFilter === "createdog" ? "active" : ""
+                whatToFilter === "create-dog" ? "active" : ""
               }`}
               onClick={() => {
-                if (creatingADog) {
-                  setCreatingADog(false);
-                  setWhatToFilter("");
-                  filterDogData((dog) => dog);
-                } else {
-                  setCreatingADog(true);
-                  setWhatToFilter("createdog");
-                }
+                whatToFilter === "create-dog"
+                  ? setWhatToFilter("non-selected")
+                  : setWhatToFilter("create-dog");
               }}>
               create dog
             </div>
           </div>
         </div>
         <div className="content-container">
-          {!creatingADog ? (
-            <ClassDogs dogData={dogData} updatePage={updatePage} />
+          {whatToFilter !== "create-dog" ? (
+            <ClassDogs dogData={dogDataToShow()} fetchData={fetchData} />
           ) : (
-            <ClassCreateDogForm updatePage={updatePage} />
+            <ClassCreateDogForm fetchData={fetchData} />
           )}
         </div>
       </section>

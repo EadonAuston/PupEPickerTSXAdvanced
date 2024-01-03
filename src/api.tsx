@@ -1,8 +1,10 @@
+import { DogData } from "./types";
+
 export const baseUrl = "http://localhost:3000";
 
 export const Requests = {
   // should return a promise with all dogs in the database
-  getAllDogs: async () => {
+  getAllDogs: async (): Promise<DogData[]> => {
     try {
       const response = await fetch("http://localhost:3000/dogs", {
         method: "GET",

@@ -1,28 +1,30 @@
 import { Component } from "react";
 import { dogPictures } from "../dog-pictures";
 import { Requests } from "../api";
+import { toast } from "react-hot-toast";
 
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 type ClassCreateDogFormProps = {
-  updatePage: () => Promise<void>;
+  fetchData: () => Promise<void>;
 };
 
 export class ClassCreateDogForm extends Component<ClassCreateDogFormProps> {
   state = {
     name: "",
     description: "",
-    image: "",
+    image: defaultSelectedImage,
     isFavorite: false,
   };
   render() {
-    const { updatePage } = this.props;
+    const { fetchData } = this.props;
     const { name, description, image, isFavorite } = this.state;
     return (
       <form
         action=""
         id="create-dog-form"
         onSubmit={async (e) => {
+          toast("✅ Dog Successfully Created!");
           e.preventDefault();
           if (!image) {
             this.setState({ image: defaultSelectedImage });
@@ -33,7 +35,9 @@ export class ClassCreateDogForm extends Component<ClassCreateDogFormProps> {
             image,
             isFavorite,
           });
-          updatePage();
+          fetchData();
+          this.setState({ name: "" });
+          this.setState({ description: "" });
         }}>
         <h4>Create a New Dog</h4>
         <label htmlFor="name">Dog Name</label>
@@ -63,9 +67,6 @@ export class ClassCreateDogForm extends Component<ClassCreateDogFormProps> {
             this.setState({ image: e.target.value });
           }}
           value={image}>
-          <option value="" selected disabled hidden>
-            Choose photo here
-          </option>
           {Object.entries(dogPictures).map(([label, pictureValue]) => {
             return (
               <option value={pictureValue} key={pictureValue}>

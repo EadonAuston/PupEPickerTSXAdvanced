@@ -1,33 +1,35 @@
-// you can use this type for react children if you so choose
-import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { FunctionalDogs } from "./FunctionalDogs";
-import { update } from "lodash-es";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
-import { DogData } from "../types";
+import { DogData, WhatToFilter } from "../types";
 
 export const FunctionalSection = ({
-  filterDogData,
-  creatingADog,
-  setCreatingADog,
-  setWhatToFilter,
-  dogData,
-  updatePage,
-  favoritedAmt,
-  unfavoritedAmt,
+  allDogs,
+  fetchData,
   whatToFilter,
+  setWhatToFilter,
 }: {
-  filterDogData: (cb: (item: DogData) => {}) => Promise<void>;
-  creatingADog: boolean;
-  setCreatingADog: React.Dispatch<React.SetStateAction<boolean>>;
-  setWhatToFilter: React.Dispatch<React.SetStateAction<string>>;
-  dogData: DogData[];
-  updatePage: () => Promise<void>;
-  favoritedAmt: number;
-  unfavoritedAmt: number;
-  whatToFilter: string;
+  allDogs: DogData[];
+  fetchData: () => Promise<void>;
+  whatToFilter: WhatToFilter;
+  setWhatToFilter: React.Dispatch<React.SetStateAction<WhatToFilter>>;
 }) => {
-  const [updateUnfavoriteAmt, setUpdateUnfavoriteAmt] = useState(0);
+  const favoritedAmt = [...allDogs].filter((dog) => dog.isFavorite).length;
+  const unfavoritedAmt = [...allDogs].filter((dog) => !dog.isFavorite).length;
+
+  function dogDataToShow() {
+    switch (whatToFilter) {
+      case "favorite":
+        return [...allDogs].filter((dog) => dog.isFavorite);
+      case "unfavorite":
+        return [...allDogs].filter((dog) => !dog.isFavorite);
+      case "non-selected":
+        return [...allDogs].filter((dog) => dog);
+      default:
+        return [];
+    }
+  }
+
   return (
     <section id="main-section">
       <div className="container-header">
@@ -42,15 +44,9 @@ export const FunctionalSection = ({
               whatToFilter === "favorite" ? "active" : ""
             }`}
             onClick={() => {
-              setCreatingADog(false);
-              if (whatToFilter === "favorite") {
-                filterDogData((dog) => dog);
-                setWhatToFilter("");
-              } else {
-                filterDogData((dog) => dog.isFavorite === true);
-
-                setWhatToFilter("favorite");
-              }
+              whatToFilter === "favorite"
+                ? setWhatToFilter("non-selected")
+                : setWhatToFilter("favorite");
             }}>
             favorited ( {favoritedAmt} )
           </div>
@@ -61,40 +57,30 @@ export const FunctionalSection = ({
               whatToFilter === "unfavorite" ? "active" : ""
             }`}
             onClick={() => {
-              setCreatingADog(false);
-              if (whatToFilter === "unfavorite") {
-                filterDogData((dog) => dog);
-                setWhatToFilter("");
-              } else {
-                filterDogData((dog) => dog.isFavorite === false);
-                setWhatToFilter("unfavorite");
-              }
+              whatToFilter === "unfavorite"
+                ? setWhatToFilter("non-selected")
+                : setWhatToFilter("unfavorite");
             }}>
-            unfavorited ( {unfavoritedAmt + updateUnfavoriteAmt} )
+            unfavorited ( {unfavoritedAmt} )
           </div>
           <div
             className={`selector ${
-              whatToFilter === "createdog" ? "active" : ""
+              whatToFilter === "create-dog" ? "active" : ""
             }`}
             onClick={() => {
-              if (creatingADog) {
-                setCreatingADog(false);
-                setWhatToFilter("");
-                filterDogData((dog) => dog);
-              } else {
-                setCreatingADog(true);
-                setWhatToFilter("createdog");
-              }
+              whatToFilter === "create-dog"
+                ? setWhatToFilter("non-selected")
+                : setWhatToFilter("create-dog");
             }}>
             create dog
           </div>
         </div>
       </div>
       <div className="content-container">
-        {!creatingADog ? (
-          <FunctionalDogs dogData={dogData} updatePage={updatePage} />
+        {whatToFilter !== "create-dog" ? (
+          <FunctionalDogs dogData={dogDataToShow()} fetchData={fetchData} />
         ) : (
-          <FunctionalCreateDogForm updatePage={updatePage} />
+          <FunctionalCreateDogForm fetchData={fetchData} />
         )}
       </div>
     </section>

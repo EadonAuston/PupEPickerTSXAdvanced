@@ -1,37 +1,23 @@
-import { Component, Dispatch, SetStateAction } from "react";
+import { Component } from "react";
 import { ClassSection } from "./ClassSection";
 import { Requests } from "../api";
+import { DogData, WhatToFilter } from "../types";
 
-export class ClassApp extends Component {
-  state = {
-    dogData: [],
-    whatToFilter: "",
-    filteredDogData: [],
-    creatingADog: false,
-    favoritedAmt: 0,
-    unfavoritedAmt: 0,
+type ClassAppState = {
+  allDogs: DogData[];
+  whatToFilter: WhatToFilter;
+};
+
+export class ClassApp extends Component<{}, ClassAppState> {
+  state: ClassAppState = {
+    allDogs: [],
+    whatToFilter: "non-selected",
   };
 
   fetchData = async () => {
     try {
       const data = await Requests.getAllDogs();
-      this.setState({
-        favoritedAmt: data.filter((dog) => dog.isFavorite === true).length,
-        unfavoritedAmt: data.filter((dog) => dog.isFavorite === false).length,
-        dogData: data,
-      });
-
-      if (this.state.whatToFilter === "favorite") {
-        this.setState({
-          filteredDogData: data.filter((dog) => dog.isFavorite === true),
-        });
-      } else if (this.state.whatToFilter === "unfavorite") {
-        this.setState({
-          filteredDogData: data.filter((dog) => dog.isFavorite === false),
-        });
-      } else {
-        this.setState({ filteredDogData: data });
-      }
+      this.setState({ allDogs: data });
     } catch (error) {
       console.error("Error fetching dog data:", error);
     }
@@ -41,28 +27,12 @@ export class ClassApp extends Component {
     this.fetchData();
   }
 
-  filterDogData = async (cb: () => {}) => {
-    const data = await Requests.getAllDogs();
-    this.setState({ filteredDogData: data.filter(cb) });
-  };
-
-  setCreatingADog = (inputValue: boolean) => {
-    this.setState({ creatingADog: inputValue });
-  };
-
-  setWhatToFilter = (inputValue: string) => {
+  setWhatToFilter = (inputValue: WhatToFilter) => {
     this.setState({ whatToFilter: inputValue });
   };
 
   render() {
-    const {
-      dogData,
-      whatToFilter,
-      filteredDogData,
-      creatingADog,
-      favoritedAmt,
-      unfavoritedAmt,
-    } = this.state;
+    const { allDogs, whatToFilter } = this.state;
 
     return (
       <div className="App" style={{ backgroundColor: "goldenrod" }}>
@@ -70,15 +40,10 @@ export class ClassApp extends Component {
           <h1>pup-e-picker (Class Version)</h1>
         </header>
         <ClassSection
-          favoritedAmt={favoritedAmt}
-          unfavoritedAmt={unfavoritedAmt}
-          filterDogData={this.filterDogData}
-          creatingADog={creatingADog}
-          setCreatingADog={this.setCreatingADog}
-          setWhatToFilter={this.setWhatToFilter}
-          dogData={filteredDogData}
-          updatePage={this.fetchData}
+          allDogs={allDogs}
+          fetchData={this.fetchData}
           whatToFilter={whatToFilter}
+          setWhatToFilter={this.setWhatToFilter}
         />
       </div>
     );
