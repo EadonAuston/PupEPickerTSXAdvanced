@@ -19,26 +19,31 @@ export class ClassCreateDogForm extends Component<ClassCreateDogFormProps> {
   render() {
     const { fetchData } = this.props;
     const { name, description, image, isFavorite } = this.state;
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        await Requests.postDog({
+          name,
+          description,
+          image,
+          isFavorite,
+        });
+        toast.success("Dog Successfully Created!");
+        if (!image) {
+          this.setState({ image: defaultSelectedImage });
+        }
+        fetchData();
+        this.setState({ name: "" });
+        this.setState({ description: "" });
+      } catch (error) {
+        toast.error("Dog Creation Unsuccessful");
+        console.error("Error creating dog:", error);
+      }
+    };
+
     return (
-      <form
-        action=""
-        id="create-dog-form"
-        onSubmit={async (e) => {
-          toast("✅ Dog Successfully Created!");
-          e.preventDefault();
-          if (!image) {
-            this.setState({ image: defaultSelectedImage });
-          }
-          await Requests.postDog({
-            name,
-            description,
-            image,
-            isFavorite,
-          });
-          fetchData();
-          this.setState({ name: "" });
-          this.setState({ description: "" });
-        }}>
+      <form action="" id="create-dog-form" onSubmit={(e) => handleSubmit(e)}>
         <h4>Create a New Dog</h4>
         <label htmlFor="name">Dog Name</label>
         <input

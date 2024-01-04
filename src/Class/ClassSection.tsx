@@ -14,17 +14,17 @@ type ClassSectionProps = {
 export class ClassSection extends Component<ClassSectionProps> {
   render() {
     const { allDogs, fetchData, whatToFilter, setWhatToFilter } = this.props;
-    const favoritedAmt = [...allDogs].filter((dog) => dog.isFavorite).length;
-    const unfavoritedAmt = [...allDogs].filter((dog) => !dog.isFavorite).length;
+    const favoritedAmt = allDogs.filter((dog) => dog.isFavorite).length;
+    const unfavoritedAmt = allDogs.filter((dog) => !dog.isFavorite).length;
 
     function dogDataToShow() {
       switch (whatToFilter) {
         case "favorite":
-          return [...allDogs].filter((dog) => dog.isFavorite);
+          return allDogs.filter((dog) => dog.isFavorite);
         case "unfavorite":
-          return [...allDogs].filter((dog) => !dog.isFavorite);
+          return allDogs.filter((dog) => !dog.isFavorite);
         case "non-selected":
-          return [...allDogs].filter((dog) => dog);
+          return allDogs;
         default:
           return [];
       }

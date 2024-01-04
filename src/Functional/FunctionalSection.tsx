@@ -14,17 +14,17 @@ export const FunctionalSection = ({
   whatToFilter: WhatToFilter;
   setWhatToFilter: React.Dispatch<React.SetStateAction<WhatToFilter>>;
 }) => {
-  const favoritedAmt = [...allDogs].filter((dog) => dog.isFavorite).length;
-  const unfavoritedAmt = [...allDogs].filter((dog) => !dog.isFavorite).length;
+  const favoritedAmt = allDogs.filter((dog) => dog.isFavorite).length;
+  const unfavoritedAmt = allDogs.filter((dog) => !dog.isFavorite).length;
 
   function dogDataToShow() {
     switch (whatToFilter) {
       case "favorite":
-        return [...allDogs].filter((dog) => dog.isFavorite);
+        return allDogs.filter((dog) => dog.isFavorite);
       case "unfavorite":
-        return [...allDogs].filter((dog) => !dog.isFavorite);
+        return allDogs.filter((dog) => !dog.isFavorite);
       case "non-selected":
-        return [...allDogs].filter((dog) => dog);
+        return allDogs;
       default:
         return [];
     }

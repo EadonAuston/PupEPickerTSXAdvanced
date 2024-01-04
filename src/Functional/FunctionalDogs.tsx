@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { DogCard } from "../Shared/DogCard";
 import { Requests } from "../api";
 import { DogData } from "../types";
@@ -10,19 +11,26 @@ export const FunctionalDogs = ({
   dogData: DogData[];
   fetchData: () => Promise<void>;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const handleTrashIconClick = async (dogId: number) => {
+    setIsLoading(true);
     await Requests.deleteDog(dogId);
     await fetchData();
+    setIsLoading(false);
   };
 
   const handleHeartClick = async (dogId: number) => {
+    setIsLoading(true);
     await Requests.updateDog(dogId, { isFavorite: false });
     await fetchData();
+    setIsLoading(false);
   };
 
   const handleEmptyHeartClick = async (dogId: number) => {
+    setIsLoading(true);
     await Requests.updateDog(dogId, { isFavorite: true });
     await fetchData();
+    setIsLoading(false);
   };
 
   return (
@@ -41,7 +49,7 @@ export const FunctionalDogs = ({
             onTrashIconClick={() => handleTrashIconClick(dog.id)}
             onHeartClick={() => handleHeartClick(dog.id)}
             onEmptyHeartClick={() => handleEmptyHeartClick(dog.id)}
-            isLoading={false}
+            isLoading={isLoading}
           />
         ))}
       </div>

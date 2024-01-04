@@ -10,22 +10,32 @@ type ClassDogsProps = {
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
 export class ClassDogs extends Component<ClassDogsProps> {
+  state = {
+    isLoading: false,
+  };
   render() {
+    const { isLoading } = this.state;
     const { dogData, fetchData } = this.props;
 
     const handleTrashIconClick = async (dogId: number) => {
+      this.setState({ isLoading: true });
       await Requests.deleteDog(dogId);
       await fetchData();
+      this.setState({ isLoading: false });
     };
 
     const handleHeartClick = async (dogId: number) => {
+      this.setState({ isLoading: true });
       await Requests.updateDog(dogId, { isFavorite: false });
       await fetchData();
+      this.setState({ isLoading: false });
     };
 
     const handleEmptyHeartClick = async (dogId: number) => {
+      this.setState({ isLoading: true });
       await Requests.updateDog(dogId, { isFavorite: true });
       await fetchData();
+      this.setState({ isLoading: false });
     };
 
     return (
@@ -44,7 +54,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
               onTrashIconClick={() => handleTrashIconClick(dog.id)}
               onHeartClick={() => handleHeartClick(dog.id)}
               onEmptyHeartClick={() => handleEmptyHeartClick(dog.id)}
-              isLoading={false}
+              isLoading={isLoading}
             />
           ))}
         </div>
