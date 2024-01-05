@@ -1,1 +1,123 @@
-{"dogs":[{"name":"Edwardo","image":"/assets/boxer.png","description":"viciously past pro besides thrifty weighty jolly for","isFavorite":false,"id":0},{"name":"Jake","image":"/assets/boxer.png","description":"tame rasp past across psst","isFavorite":false,"id":1},{"name":"Samara","image":"/assets/corgi.png","description":"mid even wrist worriedly phew coast geez","isFavorite":false,"id":2},{"name":"Adonis","image":"/assets/cowardly.png","description":"righteously instead unlike when between except down even","isFavorite":false,"id":3},{"name":"Kurt","image":"/assets/dalmation.png","description":"than bliss acknowledgment palm badly","isFavorite":true,"id":4},{"name":"Eldora","image":"/assets/blue-heeler.png","description":"seemingly voluminous quick beneath blissfully rigidly or","isFavorite":true,"id":5},{"name":"Darrion","image":"/assets/dalmation.png","description":"demur toboggan after knowingly strange pricey up ringworm","isFavorite":true,"id":6},{"name":"Adolphus","image":"/assets/dalmation.png","description":"for pish ephemeris until suspiciously","isFavorite":false,"id":7},{"name":"Roslyn","image":"/assets/chihuahua.avif","description":"comply underrate yowza tattered greedily athwart beneath zowie","isFavorite":false,"id":8},{"name":"Reed","image":"/assets/dalmation.png","description":"incomparable gee first blushing yet anguished next pound","isFavorite":false,"id":9},{"name":"Percy","image":"/assets/corgi.png","description":"yippee once device plummet lest boldly whenever","isFavorite":true,"id":10},{"name":"Kyra","image":"/assets/dalmation.png","description":"bubbly huzzah validate likewise since blah consequently for","isFavorite":false,"id":11},{"name":"Tyshawn","image":"/assets/chihuahua.avif","description":"yum whether and hence wetly","isFavorite":false,"id":12},{"name":"Harley","image":"/assets/corgi.png","description":"physically chops carry this pack","isFavorite":false,"id":13},{"name":"Laron","image":"/assets/dalmation.png","description":"anti because vandalize slimy spike profitable across educate","isFavorite":true,"id":14},{"name":"Raven","image":"/assets/cowardly.png","description":"shark circadian finally row amusing underplay reorganize until","isFavorite":true,"id":15},{"name":"Rahul","image":"/assets/chihuahua.avif","description":"barge wisely fully prickly family","isFavorite":true,"id":16},{"name":"William","image":"/assets/corgi.png","description":"klutzy yet whether or hence blah sponsor","isFavorite":true,"id":17},{"name":"Charlie","image":"/assets/boxer.png","description":"ew chime lanky vertigo linseed healthily coaxingly","isFavorite":true,"id":18},{"name":"Reed","image":"/assets/blue-heeler.png","description":"dismal ugh considering however strictly","isFavorite":false,"id":19}]}
+{
+  "dogs": [
+    {
+      "name": "Vidal",
+      "image": "/assets/chihuahua.avif",
+      "description": "miserably jam mmm creosote harvest aw when",
+      "isFavorite": true,
+      "id": 2
+    },
+    {
+      "name": "Meda",
+      "image": "/assets/boxer.png",
+      "description": "pouch given wish cheer wasting near architect",
+      "isFavorite": false,
+      "id": 4
+    },
+    {
+      "name": "Jeanette",
+      "image": "/assets/boxer.png",
+      "description": "gallery limp manoeuvre decisive dictate and now ill-fated",
+      "isFavorite": false,
+      "id": 5
+    },
+    {
+      "name": "Blaise",
+      "image": "/assets/boxer.png",
+      "description": "ew until murky pleasing er truthful runny overstock",
+      "isFavorite": true,
+      "id": 6
+    },
+    {
+      "name": "Jamel",
+      "image": "/assets/corgi.png",
+      "description": "yippee yuck yippee consequently trained discipline cocoon inside",
+      "isFavorite": false,
+      "id": 7
+    },
+    {
+      "name": "Giles",
+      "image": "/assets/chihuahua.avif",
+      "description": "hence when regarding with upbeat qualified deeply",
+      "isFavorite": true,
+      "id": 8
+    },
+    {
+      "name": "Margaret",
+      "image": "/assets/dalmation.png",
+      "description": "green panhandle phooey psst oh",
+      "isFavorite": true,
+      "id": 9
+    },
+    {
+      "name": "Quinton",
+      "image": "/assets/corgi.png",
+      "description": "woot mango entrance what mold to swiftly repent",
+      "isFavorite": true,
+      "id": 10
+    },
+    {
+      "name": "Keira",
+      "image": "/assets/chihuahua.avif",
+      "description": "unlace flickering further safely barring",
+      "isFavorite": true,
+      "id": 11
+    },
+    {
+      "name": "Arianna",
+      "image": "/assets/corgi.png",
+      "description": "phooey mixed aha huzzah indeed thankfully inasmuch who",
+      "isFavorite": false,
+      "id": 12
+    },
+    {
+      "name": "Murphy",
+      "image": "/assets/blue-heeler.png",
+      "description": "deviance struggle equivalent weather shakily woot minus",
+      "isFavorite": true,
+      "id": 13
+    },
+    {
+      "name": "Toney",
+      "image": "/assets/chihuahua.avif",
+      "description": "abaft prime miserably inasmuch hmph concerning upside-down",
+      "isFavorite": false,
+      "id": 14
+    },
+    {
+      "name": "Grace",
+      "image": "/assets/dalmation.png",
+      "description": "drat hence afterwards caterwaul yet justly mmm",
+      "isFavorite": false,
+      "id": 15
+    },
+    {
+      "name": "Jordi",
+      "image": "/assets/dalmation.png",
+      "description": "zowie big-hearted youthfully yet anenst hourly pastel",
+      "isFavorite": true,
+      "id": 16
+    },
+    {
+      "name": "Antonio",
+      "image": "/assets/chihuahua.avif",
+      "description": "before during where accidentally kimono awkwardly ah steer",
+      "isFavorite": true,
+      "id": 17
+    },
+    {
+      "name": "Demetris",
+      "image": "/assets/blue-heeler.png",
+      "description": "gosh awkwardly never from whereas madam which",
+      "isFavorite": false,
+      "id": 18
+    },
+    {
+      "name": "Caesar",
+      "image": "/assets/cowardly.png",
+      "description": "since gosh restfully instead amongst subordinate brain omelet",
+      "isFavorite": false,
+      "id": 19
+    }
+  ]
+}

@@ -2,14 +2,12 @@ import { dogPictures } from "../dog-pictures";
 import { Requests } from "../api";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useDogData } from "../Providers/DogDataProvider";
 
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
-export const FunctionalCreateDogForm = ({
-  fetchData,
-}: {
-  fetchData: () => Promise<void>;
-}) => {
+export const FunctionalCreateDogForm = () => {
+  const { fetchData } = useDogData();
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");

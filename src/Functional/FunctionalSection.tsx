@@ -1,34 +1,11 @@
 import { Link } from "react-router-dom";
 import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
-import { DogData, WhatToFilter } from "../types";
+import { useDogData } from "../Providers/DogDataProvider";
 
-export const FunctionalSection = ({
-  allDogs,
-  fetchData,
-  whatToFilter,
-  setWhatToFilter,
-}: {
-  allDogs: DogData[];
-  fetchData: () => Promise<void>;
-  whatToFilter: WhatToFilter;
-  setWhatToFilter: React.Dispatch<React.SetStateAction<WhatToFilter>>;
-}) => {
-  const favoritedAmt = allDogs.filter((dog) => dog.isFavorite).length;
-  const unfavoritedAmt = allDogs.filter((dog) => !dog.isFavorite).length;
-
-  function dogDataToShow() {
-    switch (whatToFilter) {
-      case "favorite":
-        return allDogs.filter((dog) => dog.isFavorite);
-      case "unfavorite":
-        return allDogs.filter((dog) => !dog.isFavorite);
-      case "non-selected":
-        return allDogs;
-      default:
-        return [];
-    }
-  }
+export const FunctionalSection = () => {
+  const { setWhatToFilter, whatToFilter, favoritedAmt, unfavoritedAmt } =
+    useDogData();
 
   return (
     <section id="main-section">
@@ -78,9 +55,9 @@ export const FunctionalSection = ({
       </div>
       <div className="content-container">
         {whatToFilter !== "create-dog" ? (
-          <FunctionalDogs dogData={dogDataToShow()} fetchData={fetchData} />
+          <FunctionalDogs />
         ) : (
-          <FunctionalCreateDogForm fetchData={fetchData} />
+          <FunctionalCreateDogForm />
         )}
       </div>
     </section>
