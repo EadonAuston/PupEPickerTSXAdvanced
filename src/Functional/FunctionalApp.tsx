@@ -1,4 +1,3 @@
-import { DogDataProvider } from "../Providers/DogDataProvider";
 import { useDogData } from "../Providers/DogDataProvider";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 import { FunctionalDogs } from "./FunctionalDogs";
@@ -13,15 +12,13 @@ export function FunctionalApp() {
           <h1>pup-e-picker (Functional)</h1>
         </header>
       </div>
-      <DogDataProvider>
-        <FunctionalSection>
-          {whatToFilter !== "create-dog" ? (
-            <FunctionalDogs />
-          ) : (
-            <FunctionalCreateDogForm />
-          )}
-        </FunctionalSection>
-      </DogDataProvider>
+      <FunctionalSection>
+        {whatToFilter !== "create-dog" ? (
+          <FunctionalDogs />
+        ) : (
+          <FunctionalCreateDogForm />
+        )}
+      </FunctionalSection>
     </>
   );
 }

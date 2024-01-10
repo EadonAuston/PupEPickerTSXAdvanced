@@ -6,9 +6,9 @@ import { FunctionalApp } from "./Functional/FunctionalApp.tsx";
 import { Home } from "./Home.tsx";
 import "./App.css";
 import "./index.css";
-import { ClassApp } from "./Class/ClassApp.tsx";
 import { Toaster } from "react-hot-toast";
 import { Playground } from "./Playground.tsx";
+import { DogDataProvider } from "./Providers/DogDataProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,10 +19,10 @@ const router = createBrowserRouter([
     path: "/functional",
     element: <FunctionalApp />,
   },
-  {
-    path: "/class",
-    element: <ClassApp />,
-  },
+  // {
+  //   path: "/class",
+  //   element: <ClassApp />,
+  // },
   {
     path: "/playground",
     element: <Playground />,
@@ -31,7 +31,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Toaster />
-    <RouterProvider router={router} />
+    <DogDataProvider>
+      <Toaster />
+      <RouterProvider router={router} />
+    </DogDataProvider>
   </React.StrictMode>
 );
