@@ -1,5 +1,4 @@
 import { dogPictures } from "../dog-pictures";
-import { Requests } from "../api";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDogData } from "../Providers/DogDataProvider";
@@ -7,7 +6,8 @@ import { useDogData } from "../Providers/DogDataProvider";
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 export const FunctionalCreateDogForm = () => {
-  const { fetchData } = useDogData();
+  const { fetchData, postDog } = useDogData();
+
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
@@ -15,25 +15,20 @@ export const FunctionalCreateDogForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await Requests.postDog({
-        name,
-        description,
-        image,
-        isFavorite,
+    postDog(name, description, image, isFavorite)
+      .then(() => {
+        toast.success("Dog Successfully Created!");
+        if (!image) {
+          setImage(defaultSelectedImage);
+        }
+        fetchData();
+        setName("");
+        setDescription("");
+      })
+      .catch((error) => {
+        toast.error("Dog Creation Unsuccessful");
+        console.error("Error creating dog:", error);
       });
-
-      toast.success("Dog Successfully Created!");
-      if (!image) {
-        setImage(defaultSelectedImage);
-      }
-      fetchData();
-      setName("");
-      setDescription("");
-    } catch (error) {
-      toast.error("Dog Creation Unsuccessful");
-      console.error("Error creating dog:", error);
-    }
   };
 
   return (

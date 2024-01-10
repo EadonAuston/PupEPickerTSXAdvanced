@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import { FunctionalDogs } from "./FunctionalDogs";
-import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 import { useDogData } from "../Providers/DogDataProvider";
+import { WhatToFilter } from "../types";
+import { ReactNode } from "react";
 
-export const FunctionalSection = () => {
+export const FunctionalSection = ({ children }: { children: ReactNode }) => {
   const { setWhatToFilter, whatToFilter, favoritedAmt, unfavoritedAmt } =
     useDogData();
+
+  const toggleWhatToFilter = (input: WhatToFilter) => {
+    if (input === whatToFilter) setWhatToFilter("non-selected");
+    else setWhatToFilter(input);
+  };
 
   return (
     <section id="main-section">
@@ -21,9 +26,7 @@ export const FunctionalSection = () => {
               whatToFilter === "favorite" ? "active" : ""
             }`}
             onClick={() => {
-              whatToFilter === "favorite"
-                ? setWhatToFilter("non-selected")
-                : setWhatToFilter("favorite");
+              toggleWhatToFilter("favorite");
             }}>
             favorited ( {favoritedAmt} )
           </div>
@@ -34,9 +37,7 @@ export const FunctionalSection = () => {
               whatToFilter === "unfavorite" ? "active" : ""
             }`}
             onClick={() => {
-              whatToFilter === "unfavorite"
-                ? setWhatToFilter("non-selected")
-                : setWhatToFilter("unfavorite");
+              toggleWhatToFilter("unfavorite");
             }}>
             unfavorited ( {unfavoritedAmt} )
           </div>
@@ -45,21 +46,13 @@ export const FunctionalSection = () => {
               whatToFilter === "create-dog" ? "active" : ""
             }`}
             onClick={() => {
-              whatToFilter === "create-dog"
-                ? setWhatToFilter("non-selected")
-                : setWhatToFilter("create-dog");
+              toggleWhatToFilter("create-dog");
             }}>
             create dog
           </div>
         </div>
       </div>
-      <div className="content-container">
-        {whatToFilter !== "create-dog" ? (
-          <FunctionalDogs />
-        ) : (
-          <FunctionalCreateDogForm />
-        )}
-      </div>
+      <div className="content-container">{children}</div>
     </section>
   );
 };

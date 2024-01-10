@@ -34,7 +34,6 @@ export const FunctionalDogs = () => {
         dog.id === dogId ? { ...dog, isFavorite: false } : dog
       )
     );
-
     Requests.updateDog(dogId, { isFavorite: false }).catch(() => {
       setAllDogs(allDogs);
     });
@@ -46,7 +45,6 @@ export const FunctionalDogs = () => {
         dog.id === dogId ? { ...dog, isFavorite: true } : dog
       )
     );
-
     Requests.updateDog(dogId, { isFavorite: true }).catch(() => {
       setAllDogs(allDogs);
     });

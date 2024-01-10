@@ -16,6 +16,12 @@ type DogDataContextValue = {
   fetchData: () => Promise<void>;
   favoritedAmt: number;
   unfavoritedAmt: number;
+  postDog: (
+    name: string,
+    description: string,
+    image: string,
+    isFavorite: boolean
+  ) => Promise<any>;
 };
 
 const DogDataContext = createContext<DogDataContextValue>(
@@ -43,6 +49,13 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
     fetchData();
   }, []);
 
+  const postDog = (
+    name: string,
+    description: string,
+    image: string,
+    isFavorite: boolean
+  ) => Requests.postDog({ name, description, image, isFavorite });
+
   return (
     <DogDataContext.Provider
       value={{
@@ -53,6 +66,7 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
         fetchData,
         favoritedAmt,
         unfavoritedAmt,
+        postDog,
       }}>
       {children}
     </DogDataContext.Provider>
