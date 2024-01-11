@@ -20,7 +20,6 @@ export const FunctionalSection = ({ children }: { children: ReactNode }) => {
           Change to Class
         </Link>
         <div className="selectors">
-          {/* This should display the favorited count */}
           <div
             className={`selector ${
               whatToFilter === "favorite" ? "active" : ""
@@ -31,7 +30,6 @@ export const FunctionalSection = ({ children }: { children: ReactNode }) => {
             favorited ( {favoritedAmt} )
           </div>
 
-          {/* This should display the unfavorited count */}
           <div
             className={`selector ${
               whatToFilter === "unfavorite" ? "active" : ""

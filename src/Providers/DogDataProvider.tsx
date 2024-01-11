@@ -16,6 +16,10 @@ type DogDataContextValue = {
   fetchData: () => Promise<void>;
   favoritedAmt: number;
   unfavoritedAmt: number;
+  filteredDogData: DogData[];
+  handleEmptyHeartClick: (dogId: number) => void;
+  handleHeartClick: (dogId: number) => void;
+  handleTrashIconClick: (dogId: number) => void;
   postDog: (
     name: string,
     description: string,
@@ -36,41 +40,84 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
   const favoritedAmt = allDogs.filter((dog) => dog.isFavorite).length;
   const unfavoritedAmt = allDogs.filter((dog) => !dog.isFavorite).length;
 
-  const fetchData = async () => {
-    try {
-      const data = await Requests.getAllDogs();
-      setAllDogs(data);
-    } catch (error) {
-      console.error("Error fetching dog data:", error);
-    }
+  const fetchData = () => {
+    return Requests.getAllDogs()
+      .then(setAllDogs)
+      .catch((e) => console.error("Error fetching dog data:", e));
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const postDog = (
-    name: string,
-    description: string,
-    image: string,
-    isFavorite: boolean
-  ) => Requests.postDog({ name, description, image, isFavorite });
+  const filteredDogData = (() => {
+    switch (whatToFilter) {
+      case "favorite":
+        return allDogs.filter((dog) => dog.isFavorite);
+      case "unfavorite":
+        return allDogs.filter((dog) => !dog.isFavorite);
+      case "non-selected":
+        return allDogs;
+      default:
+        return [];
+    }
+  })();
 
-  return (
-    <DogDataContext.Provider
-      value={{
-        allDogs,
-        setAllDogs,
-        whatToFilter,
-        setWhatToFilter,
-        fetchData,
-        favoritedAmt,
-        unfavoritedAmt,
-        postDog,
-      }}>
-      {children}
-    </DogDataContext.Provider>
-  );
+  const handleTrashIconClick = (dogId: number) => {
+    setAllDogs(allDogs.filter((dog) => dog.id !== dogId));
+    Requests.deleteDog(dogId).catch(() => {
+      setAllDogs(allDogs);
+    });
+  };
+
+  const handleHeartClick = (dogId: number) => {
+    setAllDogs(
+      allDogs.map((dog) =>
+        dog.id === dogId ? { ...dog, isFavorite: false } : dog
+      )
+    );
+    Requests.updateDog(dogId, { isFavorite: false }).catch(() => {
+      setAllDogs(allDogs);
+    });
+  };
+
+  const handleEmptyHeartClick = async (dogId: number) => {
+    setAllDogs(
+      allDogs.map((dog) =>
+        dog.id === dogId ? { ...dog, isFavorite: true } : dog
+      )
+    );
+    Requests.updateDog(dogId, { isFavorite: true }).catch(() => {
+      setAllDogs(allDogs);
+    });
+
+    const postDog = (
+      name: string,
+      description: string,
+      image: string,
+      isFavorite: boolean
+    ) => Requests.postDog({ name, description, image, isFavorite });
+
+    return (
+      <DogDataContext.Provider
+        value={{
+          allDogs,
+          setAllDogs,
+          whatToFilter,
+          setWhatToFilter,
+          fetchData,
+          favoritedAmt,
+          unfavoritedAmt,
+          postDog,
+          filteredDogData,
+          handleEmptyHeartClick,
+          handleHeartClick,
+          handleTrashIconClick,
+        }}>
+        {children}
+      </DogDataContext.Provider>
+    );
+  };
 };
 
 export const useDogData = () => useContext(DogDataContext);

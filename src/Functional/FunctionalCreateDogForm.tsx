@@ -3,25 +3,18 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDogData } from "../Providers/DogDataProvider";
 
-const defaultSelectedImage = dogPictures.BlueHeeler;
-
 export const FunctionalCreateDogForm = () => {
   const { fetchData, postDog } = useDogData();
-
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [image, setImage] = useState<string>("");
-  const isFavorite = false;
+  const [image, setImage] = useState<string>(dogPictures.BlueHeeler);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postDog(name, description, image, isFavorite)
+    postDog(name, description, image, false)
       .then(() => {
-        toast.success("Dog Successfully Created!");
-        if (!image) {
-          setImage(defaultSelectedImage);
-        }
         fetchData();
+        toast.success("Dog Successfully Created!");
         setName("");
         setDescription("");
       })
