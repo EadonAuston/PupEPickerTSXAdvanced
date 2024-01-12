@@ -11,21 +11,24 @@ export const FunctionalCreateDogForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postDog(name, description, image, false)
-      .then(() => {
-        fetchData();
-        toast.success("Dog Successfully Created!");
-        setName("");
-        setDescription("");
-      })
-      .catch((error) => {
-        toast.error("Dog Creation Unsuccessful");
-        console.error("Error creating dog:", error);
-      });
+    postDog(name, description, image, false).then(() => {
+      fetchData();
+      setName("");
+      setDescription("");
+      toast.success("Dog Successfully Created!");
+    });
   };
 
   return (
-    <form action="" id="create-dog-form" onSubmit={(e) => handleSubmit(e)}>
+    <form
+      action=""
+      id="create-dog-form"
+      onSubmit={(e) =>
+        handleSubmit(e).catch((error) => {
+          toast.error("Dog Creation Unsuccessful");
+          console.error("Error creating dog:", error);
+        })
+      }>
       <h4>Create a New Dog</h4>
       <label htmlFor="name">Dog Name</label>
       <input

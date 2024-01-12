@@ -7,6 +7,7 @@ import {
 } from "react";
 import { DogData, WhatToFilter } from "../types";
 import { Requests } from "../api";
+import toast from "react-hot-toast";
 
 type DogDataContextValue = {
   allDogs: DogData[];
@@ -25,7 +26,7 @@ type DogDataContextValue = {
     description: string,
     image: string,
     isFavorite: boolean
-  ) => Promise<any>;
+  ) => Promise<unknown>;
 };
 
 const DogDataContext = createContext<DogDataContextValue>(
@@ -40,14 +41,12 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
   const favoritedAmt = allDogs.filter((dog) => dog.isFavorite).length;
   const unfavoritedAmt = allDogs.filter((dog) => !dog.isFavorite).length;
 
-  const fetchData = () => {
-    return Requests.getAllDogs()
-      .then(setAllDogs)
-      .catch((e) => console.error("Error fetching dog data:", e));
-  };
+  const fetchData = () => Requests.getAllDogs().then(setAllDogs);
 
   useEffect(() => {
-    fetchData();
+    fetchData().catch(() => {
+      toast.error("Failed to fetch the dogs");
+    });
   }, []);
 
   const filteredDogData = (() => {
@@ -65,7 +64,7 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
 
   const handleTrashIconClick = (dogId: number) => {
     setAllDogs(allDogs.filter((dog) => dog.id !== dogId));
-    Requests.deleteDog(dogId).catch(() => {
+    return Requests.deleteDog(dogId).catch(() => {
       setAllDogs(allDogs);
     });
   };
@@ -76,7 +75,7 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
         dog.id === dogId ? { ...dog, isFavorite: false } : dog
       )
     );
-    Requests.updateDog(dogId, { isFavorite: false }).catch(() => {
+    return Requests.updateDog(dogId, { isFavorite: false }).catch(() => {
       setAllDogs(allDogs);
     });
   };
@@ -87,37 +86,36 @@ export const DogDataProvider = ({ children }: { children: ReactNode }) => {
         dog.id === dogId ? { ...dog, isFavorite: true } : dog
       )
     );
-    Requests.updateDog(dogId, { isFavorite: true }).catch(() => {
+    return Requests.updateDog(dogId, { isFavorite: true }).catch(() => {
       setAllDogs(allDogs);
     });
-
-    const postDog = (
-      name: string,
-      description: string,
-      image: string,
-      isFavorite: boolean
-    ) => Requests.postDog({ name, description, image, isFavorite });
-
-    return (
-      <DogDataContext.Provider
-        value={{
-          allDogs,
-          setAllDogs,
-          whatToFilter,
-          setWhatToFilter,
-          fetchData,
-          favoritedAmt,
-          unfavoritedAmt,
-          postDog,
-          filteredDogData,
-          handleEmptyHeartClick,
-          handleHeartClick,
-          handleTrashIconClick,
-        }}>
-        {children}
-      </DogDataContext.Provider>
-    );
   };
+  const postDog = (
+    name: string,
+    description: string,
+    image: string,
+    isFavorite: boolean
+  ) => Requests.postDog({ name, description, image, isFavorite });
+
+  return (
+    <DogDataContext.Provider
+      value={{
+        allDogs,
+        setAllDogs,
+        whatToFilter,
+        setWhatToFilter,
+        fetchData,
+        favoritedAmt,
+        unfavoritedAmt,
+        postDog,
+        filteredDogData,
+        handleEmptyHeartClick,
+        handleHeartClick,
+        handleTrashIconClick,
+      }}>
+      {children}
+    </DogDataContext.Provider>
+  );
 };
 
 export const useDogData = () => useContext(DogDataContext);
